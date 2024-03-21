@@ -4,12 +4,13 @@ import Login from "./pages/login/Login"
 import List from "./pages/list/List"
 import Single from "./pages/single/Single"
 import New from "./pages/new/New"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { productInputs, userInputs } from "./formSource"
 import { useContext } from "react"
-import { AuthContext } from "./context/AuthContext";
+import { AuthContext } from "./context/AuthContext"
 
 import { DarkModeContext } from "./context/darkModeContext"
+import { userColumns } from "./datatablesource"
 
 function App() {
   const { darkMode } = useContext(DarkModeContext)
@@ -39,11 +40,29 @@ function App() {
               }
             />
             <Route path="users">
-              <Route index element={<List />} />
-              <Route path=":userId" element={<Single />} />
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <List columns={userColumns} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path=":userId"
+                element={
+                  <ProtectedRoute>
+                    <Single />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="new"
-                element={<New inputs={userInputs} title="Add New User" />}
+                element={
+                  <ProtectedRoute>
+                    <New inputs={userInputs} title="Add New User" />
+                  </ProtectedRoute>
+                }
               />
             </Route>
             <Route path="products">
