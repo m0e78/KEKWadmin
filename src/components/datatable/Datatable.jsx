@@ -19,7 +19,9 @@ const Datatable = ({ columns }) => {
     try {
       await axios.delete(`/api/${path}/${id}`)
       setList(list.filter((item) => item._id !== id))
-    } catch (err) {console.log(err)}
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const actionColumn = [
@@ -46,7 +48,7 @@ const Datatable = ({ columns }) => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New User
+        {path}
         <Link to={`/${path}/new`} className="link">
           Add New
         </Link>
