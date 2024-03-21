@@ -8,9 +8,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { productInputs, userInputs } from "./formSource"
 import { useContext } from "react"
 import { AuthContext } from "./context/AuthContext"
+import { hotelColumns, roomColumns, userColumns } from "./datatablesource";
 
 import { DarkModeContext } from "./context/darkModeContext"
-import { userColumns } from "./datatablesource"
 
 function App() {
   const { darkMode } = useContext(DarkModeContext)
@@ -65,13 +65,57 @@ function App() {
                 }
               />
             </Route>
-            <Route path="products">
-              <Route index element={<List />} />
-              <Route path=":productId" element={<Single />} />
+            <Route path="hotels">
               <Route
-                path="new"
-                element={<New inputs={productInputs} title="Add New Product" />}
+                index
+                element={
+                  <ProtectedRoute>
+                    <List columns={hotelColumns} />
+                  </ProtectedRoute>
+                }
               />
+              <Route
+                path=":productId"
+                element={
+                  <ProtectedRoute>
+                    <Single />
+                  </ProtectedRoute>
+                }
+              />
+              {/* <Route
+                path="new"
+                element={
+                  <ProtectedRoute>
+                    <NewHotel />
+                  </ProtectedRoute>
+                }
+              /> */}
+            </Route>
+            <Route path="rooms">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <List columns={roomColumns} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path=":productId"
+                element={
+                  <ProtectedRoute>
+                    <Single />
+                  </ProtectedRoute>
+                }
+              />
+              {/* <Route
+                path="new"
+                element={
+                  <ProtectedRoute>
+                    <NewRoom />
+                  </ProtectedRoute>
+                }
+              /> */}
             </Route>
           </Route>
         </Routes>
