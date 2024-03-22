@@ -1,17 +1,21 @@
-import "./navbar.scss";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlined";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext } from "react";
+import "./navbar.scss"
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
+import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlined"
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined"
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined"
+import ListOutlinedIcon from "@mui/icons-material/ListOutlined"
+import { DarkModeContext } from "../../context/darkModeContext"
+import { useContext } from "react"
 
 const Navbar = () => {
-  const { dispatch } = useContext(DarkModeContext);
-
+  const { dispatch } = useContext(DarkModeContext)
+  const handleLogout = () => {
+    localStorage.removeItem("user")
+    window.location.reload()
+  }
+  
   return (
     <div className="navbar">
       <div className="wrapper">
@@ -51,10 +55,20 @@ const Navbar = () => {
               className="avatar"
             />
           </div>
+          <div className="item">
+            <img
+              width={30}
+              style={{ cursor: "pointer" }}
+              onClick={handleLogout}
+              src="https://cdn1.iconfinder.com/data/icons/heroicons-ui/24/logout-1024.png"
+              alt="Logout"
+              className="logout"
+            />
+          </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
