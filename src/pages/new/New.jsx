@@ -1,43 +1,43 @@
-import "./new.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
-import axios from "axios";
+import "./new.scss"
+import Sidebar from "../../components/sidebar/Sidebar"
+import Navbar from "../../components/navbar/Navbar"
+import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined"
+import { useState } from "react"
+import axios from "axios"
 
 const New = ({ inputs, title }) => {
-  const [file, setFile] = useState("");
-  const [info, setInfo] = useState({});
+  const [file, setFile] = useState("")
+  const [info, setInfo] = useState({})
 
   const handleChange = (e) => {
-    setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-  };
+    setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }))
+  }
 
   const handleClick = async (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "upload");
+    e.preventDefault()
+    const data = new FormData()
+    data.append("file", file)
+    data.append("upload_preset", "upload")
     try {
       const uploadRes = await axios.post(
         "https://api.cloudinary.com/v1_1/dkvla1abb/image/upload",
         data
-      );
+      )
 
-      const { url } = uploadRes.data;
+      const { url } = uploadRes.data
 
       const newUser = {
         ...info,
         img: url,
-      };
+      }
 
-      await axios.post("/api/auth/register", newUser);
+      await axios.post("/api/auth/register", newUser)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
-  console.log(info);
+  console.log(info)
   return (
     <div className="new">
       <Sidebar />
@@ -82,13 +82,20 @@ const New = ({ inputs, title }) => {
                   />
                 </div>
               ))}
+              <div className="formInput">
+                <label>Admin?</label>
+                <select id="isAdmin" onChange={handleChange}>
+                  <option value={false}>No</option>
+                  <option value={true}>Yes</option>
+                </select>
+              </div>
               <button onClick={handleClick}>Send</button>
             </form>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default New;
+export default New
